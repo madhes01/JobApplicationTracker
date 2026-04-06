@@ -1,4 +1,5 @@
 import { betterAuth } from "better-auth";
+import { headers } from "next/headers";
 import { Pool } from "pg";
 
 const pool = new Pool({
@@ -11,6 +12,14 @@ export const auth = betterAuth({
         enabled: true,
     }
 });
+
+export async function getSession() {
+    const result = await auth.api.getSession({
+        headers: await headers()
+    });
+
+    return result;
+}
 
 {/* import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { MongoClient } from "mongodb";
