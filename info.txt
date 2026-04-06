@@ -1,0 +1,31 @@
+# 1. Clone your project
+git clone your_repo_url
+cd your_project_folder
+
+# 2. Install dependencies (includes pg if in package.json already)
+pnpm install
+
+# 3. Install pg explicitly if needed
+pnpm add pg
+pnpm add -D @types/pg
+
+# 4. Create .env.local and paste your Neon connection string
+
+# 5. Run DB migration
+pnpm dlx @better-auth/cli@latest migrate --config lib/auth/auth.ts
+
+# 6. Start dev server
+pnpm dev
+
+
+#MONGODB_URI=mongodb+srv://madhankrishnan98_db_user:GLkcvEI32AuIdEck@cluster0.omj8mkv.mongodb.net/?appName=Cluster0
+DATABASE_URL=postgresql://neondb_owner:npg_MJ0HihjyQpS7@ep-orange-dew-a476yg3k-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+BETTER_AUTH_SECRET=lFipgPyldxlvSMdI1tvmH2dWVWUt1e8a
+BETTER_AUTH_URL=http://localhost:3000
+NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
+
+
+# NEXT_PUBLIC_ was added to make it accessible to client, or else it wont be accessible for client
+
+# madhankrishnan98_db_user
+# GLkcvEI32AuIdEck
