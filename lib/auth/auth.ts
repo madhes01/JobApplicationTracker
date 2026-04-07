@@ -2,6 +2,8 @@ import { betterAuth } from "better-auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Pool } from "pg";
+import { initializeUserBoard } from "../init-user-board";
+
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -11,7 +13,18 @@ export const auth = betterAuth({
     database: pool,
     emailAndPassword: {
         enabled: true,
-    }
+    },
+    databasehooks: {
+        user: {
+            create: {
+                after: async (user) => {
+                    if (user.id) {
+                        await initializeUserBoard(user.id);
+                    }
+                }
+            }
+        }
+    },
 });
 
 export async function getSession() {
