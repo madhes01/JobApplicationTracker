@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Pool } from "pg";
 import { initializeUserBoard } from "../init-user-board";
-
+import type { User } from "better-auth";
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -14,10 +14,11 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
     },
-    databasehooks: {
+    databaseHooks: {
         user: {
             create: {
-                after: async (user) => {
+                after: async (user: User) => {
+                    console.log("User created hook fired:", user.id)
                     if (user.id) {
                         await initializeUserBoard(user.id);
                     }

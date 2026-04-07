@@ -13,11 +13,13 @@ const DEFAULT_COLUMNS = [
 export async function initializeUserBoard(userId: string) {
     try {
         // Check if board already exists
+        console.log("initializeUserBoard called for:", userId)
         const existingBoard = await prisma.board.findFirst({
             where: { userId, name: "Job Hunt" },
         });
 
         if (existingBoard) {
+            console.log("Board already exists:", existingBoard.id)
             return existingBoard;
         }
 
@@ -37,9 +39,10 @@ export async function initializeUserBoard(userId: string) {
                 columns: true, // return columns in response
             },
         });
-
+        console.log("Board created:", board.id)
         return board;
     } catch (err) {
+        console.error("initializeUserBoard error:", err)
         throw err;
     }
 }
