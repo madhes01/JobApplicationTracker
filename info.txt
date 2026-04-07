@@ -1,22 +1,41 @@
+# Prerequisites (install these manually)
+# - Node.js: https://nodejs.org
+# - pnpm: npm install -g pnpm
+# - Git: https://git-scm.com
+
 # 1. Clone your project
 git clone your_repo_url
 cd your_project_folder
 
-# 2. Install dependencies (includes pg if in package.json already)
+# 2. Install dependencies
 pnpm install
 
-# 3. Install pg explicitly if needed
-pnpm add pg
-pnpm add -D @types/pg
+# 3. Create .env file and add Neon connection string
+# Add this line to .env:
+# DATABASE_URL=your_neon_connection_string
 
-# 4. Create .env.local and paste your Neon connection string
+# 4. Create .env.local and add these:
+# DATABASE_URL=your_neon_connection_string
+# BETTER_AUTH_SECRET=your_secret
+# BETTER_AUTH_URL=http://localhost:3000
+# NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
 
-# 5. Run DB migration
+# 5. Push Prisma schema to Neon
+pnpm prisma db push
+
+# 6. Generate Prisma client
+pnpm prisma generate
+
+# 7. Run Better Auth migration
 pnpm dlx @better-auth/cli@latest migrate --config lib/auth/auth.ts
 
-# 6. Start dev server
+# 8. Start dev server
 pnpm dev
+Important Notes
 
+pg and @types/pg are already in package.json so pnpm install handles them automatically — no need to install separately
+Both .env and .env.local need DATABASE_URL — Prisma reads .env, Next.js reads .env.local
+Never push either .env or .env.local to GitHub — keep connection string saved in Notion/Notes
 
 #MONGODB_URI=mongodb+srv://madhankrishnan98_db_user:GLkcvEI32AuIdEck@cluster0.omj8mkv.mongodb.net/?appName=Cluster0
 DATABASE_URL=postgresql://neondb_owner:npg_MJ0HihjyQpS7@ep-orange-dew-a476yg3k-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
