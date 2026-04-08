@@ -26,7 +26,7 @@ export async function initializeUserBoard(userId: string) {
         // Create board AND columns together in one query
         const board = await prisma.board.create({
             data: {
-                name: "Job Hunt",
+                name: "Madhes",
                 userId,
                 columns: {
                     create: DEFAULT_COLUMNS.map((col) => ({
