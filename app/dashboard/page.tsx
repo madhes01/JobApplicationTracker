@@ -28,7 +28,7 @@ async function Dashboard() {
           <h1 className="text-3xl font-bold text-black;">Job Hunt</h1>
           <p className="text-gray-600">Track your job applications</p>
         </div>
-        <KanbanBoard board={board} userId={session.user.id} />
+        <KanbanBoard />
       </div>
     </div>
   )
