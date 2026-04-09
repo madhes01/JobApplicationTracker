@@ -15,7 +15,17 @@ async function Dashboard() {
   const board = await prisma.board.findFirst({
     where: {
       userId: session.user.id,
-      name: "Madhes",
+      name: "Job Hunt",
+    },
+    include: {
+      columns: {
+        include: {
+          jobApplications: true
+        },
+        orderBy: {
+          order: 'asc'
+        }
+      }
     }
   })
 
@@ -28,7 +38,7 @@ async function Dashboard() {
           <h1 className="text-3xl font-bold text-black;">Job Hunt</h1>
           <p className="text-gray-600">Track your job applications</p>
         </div>
-        <KanbanBoard />
+        <KanbanBoard board={board} userId={session.user.id} />
       </div>
     </div>
   )
